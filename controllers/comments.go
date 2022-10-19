@@ -110,14 +110,24 @@ func PutCommentsId(c *gin.Context) {
 				"message": "Cannot update message",
 			})
 			return
+		} else {
+			Photo := models.Photo{}
+			err = db.Debug().Where("id = ?", Comment.Photo_id).Find(&Photo).Error
+			if err != nil {
+				c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+					"message": "Cannot update message",
+				})
+				return
+			}
+			c.JSON(200, gin.H{
+				"id ":        Photo.ID,
+				"title":      Photo.Title,
+				"caption":    Photo.Caption,
+				"photo_url":  Photo.Photo_url,
+				"user_id":    Photo.User_id,
+				"updated_at": Photo.UpdatedAt,
+			})
 		}
-		c.JSON(200, gin.H{
-			"id ":        Comment.ID,
-			"message":    Comment.Message,
-			"photo_id":   Comment.Photo_id,
-			"user_id":    Comment.User_id,
-			"updated_at": Comment.UpdatedAt,
-		})
 
 	}
 
