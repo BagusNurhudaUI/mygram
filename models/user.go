@@ -13,7 +13,7 @@ type User struct {
 	Username string `gorm:"not null; uniqueIndex" json:"username" valid:"required~Username is required"`
 	Email    string `gorm:"not null; uniqueIndex" json:"email" valid:"required~Email is required, email~Email is not validate as email"`
 	Password string `gorm:"not null" json:"password" valid:"required~Password is required, minstringlength(6)~Minimum password length is 6 digits"`
-	Age      uint   `gorm:"not null json:"age" valid:"required~Age is required"`
+	Age      uint   `gorm:"not null" json:"age" valid:"required~Age is required"`
 }
 
 func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
@@ -25,7 +25,7 @@ func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
 	}
 
 	if u.Age <= 8 {
-		err = errors.New("Age must be greater than or equal to 8")
+		err = errors.New("age must be greater than or equal to 8")
 		return
 	}
 
@@ -42,7 +42,7 @@ func (u *User) BeforeUpdate(tx *gorm.DB) (err error) {
 		return
 	}
 	if u.Age <= 8 {
-		err = errors.New("Age must be greater than or equal to 8")
+		err = errors.New("age must be greater than or equal to 8")
 		return
 	}
 	// u.Password = helpers.HashPassword(u.Password)

@@ -14,7 +14,7 @@ func PostPhotos(c *gin.Context) {
 	Photo := models.Photo{}
 	_ = db
 	c.ShouldBindJSON(&Photo)
-	Photo.UserID = userData.(uint)
+	Photo.User_id = userData.(uint)
 
 	err := db.Debug().Create(&Photo).Error
 
@@ -26,11 +26,11 @@ func PostPhotos(c *gin.Context) {
 		return
 	} else {
 		c.JSON(201, gin.H{
-			"id":         Photo.UserID,
+			"id":         Photo.User_id,
 			"title":      Photo.Title,
 			"caption":    Photo.Caption,
 			"photo_url":  Photo.Photo_url,
-			"user_id":    Photo.UserID,
+			"user_id":    Photo.User_id,
 			"created_at": Photo.CreatedAt,
 		})
 	}
@@ -85,7 +85,7 @@ func PutPhotosId(c *gin.Context) {
 	Photo := models.Photo{}
 	UpdatedPhoto := models.Photo{}
 	c.ShouldBindJSON(&Photo)
-	Photo.UserID = userData
+	Photo.User_id = userData
 
 	err := db.Debug().First(&UpdatedPhoto, "id = ?", params).Error
 	if err != nil {
@@ -109,7 +109,7 @@ func PutPhotosId(c *gin.Context) {
 				"title":      UpdatedPhoto.Title,
 				"caption":    UpdatedPhoto.Caption,
 				"photo_url":  UpdatedPhoto.Photo_url,
-				"user_id":    UpdatedPhoto.UserID,
+				"user_id":    UpdatedPhoto.User_id,
 				"updated_at": UpdatedPhoto.UpdatedAt,
 			})
 		}
@@ -131,7 +131,6 @@ func DeletePhotosId(c *gin.Context) {
 	} else {
 		c.JSON(200, gin.H{
 			"message": "Your photo has been successfully deleted",
-			"id":      params,
 		})
 	}
 

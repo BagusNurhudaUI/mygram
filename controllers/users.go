@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var appJSON = "application/json"
+// var appJSON = "application/json"
 
 func PostUserRegister(c *gin.Context) {
 	db := database.GetDB()
@@ -140,7 +140,10 @@ func DeleteUser(c *gin.Context) {
 		return
 	}
 
-	err := db.Debug().Where("id = ?", userId).Delete(&User).Error
+	db.Debug().Where("User_id = ?", userId).Delete(&models.Photo{})
+	db.Debug().Where("User_id = ?", userId).Delete(&models.Comment{})
+	db.Debug().Where("User_id = ?", userId).Delete(&models.SocialMedia{})
+	err := db.Debug().Select("Comment", "Photo", "SocialMedia").Delete(&User).Error
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error":   "Cannot delete the data, bad request",

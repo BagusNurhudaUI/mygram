@@ -40,7 +40,7 @@ func StartApp() *gin.Engine {
 	SocialMedias.Use(middleware.Authentication())
 	SocialMedias.POST("/", controllers.PostSocialMedias)
 	SocialMedias.GET("/", controllers.GetSocialMedias)
-	SocialMedias.PUT("/:socialMediasId", middleware.AthSocialMedia(), controllers.PutSocialMediasId)
-	SocialMedias.DELETE("/:socialMediasId", middleware.AthSocialMedia(), controllers.DeleteSocialMediasId)
+	SocialMedias.PUT("/:socialMediaId", middleware.AthSocialMedia(), controllers.PutSocialMediasId)
+	SocialMedias.DELETE("/:socialMediaId", middleware.AthSocialMedia(), controllers.DeleteSocialMediasId)
 	return r
 }

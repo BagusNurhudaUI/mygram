@@ -25,8 +25,8 @@ type Photo struct {
 	Title     string `gorm:"not null" json:"title" valid:"required~Title is required"`
 	Caption   string `json:"caption"`
 	Photo_url string `json:"photo_url" valid:"required~Photo URL is required"`
-	UserID    uint
-	User      *User `json:"omitempty"`
+	User_id   uint
+	User      *User `json:"omitempty"  gorm:"foreignKey:User_id "`
 }
 
 func (u *Photo) BeforeCreate(tx *gorm.DB) (err error) {
